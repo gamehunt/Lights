@@ -37,7 +37,7 @@ namespace Lights
         public override string Prefix => "lights";
 
         /// <inheritdoc />
-        public override Version RequiredExiledVersion { get; } = new Version(2, 10, 0);
+        public override Version RequiredExiledVersion { get; } = new Version(3, 0, 3);
 
         /// <inheritdoc />
         public override void OnEnabled()

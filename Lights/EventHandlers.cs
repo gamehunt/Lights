@@ -19,12 +19,12 @@ namespace Lights
     /// </summary>
     public partial class EventHandlers
     {
-        private readonly Dictionary<DoorVariant, bool> doorsToRestore;
+        private readonly Dictionary<Door, bool> doorsToRestore;
         private readonly Plugin plugin;
         private readonly Config config;
         private CoroutineHandle automaticHandler;
         private CoroutineHandle lightsBack;
-        private IEnumerable<DoorVariant> doorsToChange;
+        private IEnumerable<Door> doorsToChange;
         private bool teslasDisabled;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Lights
             this.plugin = plugin;
             config = plugin.Config;
 
-            doorsToRestore = new Dictionary<DoorVariant, bool>();
+            doorsToRestore = new Dictionary<Door, bool>();
         }
 
         /// <inheritdoc cref="Exiled.Events.Handlers.Server.OnRoundStarted"/>

@@ -38,11 +38,11 @@ namespace Lights
 
                     foreach (var door in doorsToChange)
                     {
-                        if (!Warhead.IsInProgress && door.NetworkActiveLocks == 0)
+                        if (!Warhead.IsInProgress && door.DoorLockType == DoorLockType.None)
                         {
                             if (config.Blackouts.RestoreDoors)
-                                doorsToRestore.Add(door, door.IsConsideredOpen());
-                            door.NetworkTargetState = !door.IsConsideredOpen();
+                                doorsToRestore.Add(door, door.IsOpen);
+                            door.IsOpen = true;
                         }
                     }
                 }
@@ -53,8 +53,8 @@ namespace Lights
 
                     if (config.Blackouts.ModifyDoors && config.Blackouts.RestoreDoors)
                     {
-                        foreach (KeyValuePair<DoorVariant, bool> pair in doorsToRestore)
-                            pair.Key.NetworkTargetState = pair.Value;
+                        foreach (KeyValuePair<Door, bool> pair in doorsToRestore)
+                            pair.Key.IsOpen = pair.Value;
                     }
                 });
             }
@@ -78,7 +78,7 @@ namespace Lights
                 Cassie.Message(msg, config.Cassie.MakeHold, config.Cassie.MakeNoise);
             }
 
-            Generator079.mainGenerator.ServerOvercharge(duration, hczOnly);
+            Map.TurnOffAllLights(duration, hczOnly ? ZoneType.HeavyContainment : ZoneType.Unspecified);
         }
 
         private IEnumerator<float> MultipleBlackouts()
